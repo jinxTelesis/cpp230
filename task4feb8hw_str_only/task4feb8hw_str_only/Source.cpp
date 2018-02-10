@@ -62,8 +62,8 @@ int main()
 	for (int index = 0; index < rowCounter * columnCounter; index++) // index over every value
 	{
 		getline(excelfile2, compareStr, ','); // gets next value to delimiter
-											  //delimit = delimit + compareStr + delimit;
-											  //cout << delimit << endl;
+											 
+											 
 
 		int found1 = compareStr.find(class1); // checks each value against the class value
 		if (found1 != string::npos) // if not not found sets flag to true so value counted once rather than multiple times
@@ -77,8 +77,8 @@ int main()
 			flag2 = true;
 		}
 
-		int found3 = compareStr.find(class3); // won't 
-		if (found3 != string::npos)// if not not found sets flag to true so value counted once rather than multiple times
+		int found3 = compareStr.find(class3);
+		if (found3 != string::npos)
 		{
 			flag3 = true;
 		}
