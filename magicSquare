@@ -1,0 +1,153 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+bool testMagic(int[][3],int size);
+
+int main()
+{
+	bool fTFlag = false;
+	const int ARRAY_SIZE = 3;
+	int twoDArrayF[3][3] = {{7, 3, 1},
+							{8, 6, 9},
+							{9, 4, 2} };
+	int twoDArrayT[3][3] = {{2, 7, 6},
+							{9, 5, 1},
+							{4, 3, 8} };
+
+	fTFlag = testMagic(twoDArrayF, ARRAY_SIZE);
+
+	if (fTFlag == true)
+	{
+		cout << "You found a magic square" << endl;
+	}
+
+	if (fTFlag == false)
+	{
+		cout << "not a magic square" << endl;
+	}
+	
+
+	system("pause");
+	return 0;
+}
+
+bool testMagic(int array[][3], int size)
+{
+	bool testCon= false;
+	int storeResultsArray[10];
+	int loopCounter = 1;
+	int tempSum = 0;
+	int incrementTruth =0;
+	int stoResPos = 0;
+	int incrPos = 0;
+
+	int horcount1 = 0;
+	int horcount2 = 0;
+
+	for (int i = 0; i < size; i++)
+		for (int j = 0; j < size; j++)
+			cout << array[i][j] << endl;
+
+	cout << "\n\n\n" << endl;
+/*
+	for (int i = 0; i < size; i++)
+	{
+		
+		if (testCon == true)
+		{
+			storeResultsArray[i] = tempSum;
+			tempSum = 0;
+		}
+		testCon = true;
+
+		for (int j = 0; j < size; j++)
+		{
+			tempSum = array[i][j];
+		}
+	}
+*/
+
+	for (int i = 0; i < size; i++)
+		for (int j = 0; j < size; j++)
+		{
+			tempSum += array[i][j];
+			incrPos++;
+			cout << "this is temp sum" << tempSum << endl;
+			//storeResultsArray[0] = tempSum;
+			//cout << "value 0" << endl;
+			if (incrPos == 3) // 1 2 3 
+			{
+				cout << "fired" << endl;
+				storeResultsArray[stoResPos] = tempSum;
+				stoResPos++;
+				incrPos = 0;
+				tempSum = 0;
+			}
+		}
+
+	tempSum = 0;
+	incrPos = 0;
+
+	for (int i = 0; i < size; i++)
+		for (int j = 0; j < size; j++)
+		{
+			tempSum += array[j][i];
+			incrPos++;
+			cout << "this is temp sum" << tempSum << endl;
+			//storeResultsArray[0] = tempSum;
+			//cout << "value 0" << endl;
+			if (incrPos == 3) // 1 2 3 
+			{
+				cout << "fired" << endl;
+				storeResultsArray[stoResPos] = tempSum;
+				incrPos = 0;
+				stoResPos++;
+				tempSum = 0;
+			}
+		}
+
+	tempSum = 0;
+	incrPos = 0;
+
+	for (int i = 0; i < size; i++)
+	{
+		tempSum +=array[horcount1][horcount1];
+		horcount1++;
+		incrPos++;
+
+		if (incrPos == 3)
+		{
+			cout << "fired" << endl;
+			storeResultsArray[stoResPos] = tempSum;
+		}
+	}
+
+
+
+	//for (int i = 0; i < 10; i++)
+	//	cout << "this is storeResult" << endl;
+
+	for (int i = 0; i < 10; i++)
+		cout << "this is store results" << storeResultsArray[i] << endl;
+	
+
+	for (int i = 0; i < (size * size + 1); i++)
+	{
+		if ((storeResultsArray[0] == storeResultsArray[i]))
+		{
+			incrementTruth++;
+		}
+	}
+	cout << "increment truths value " << incrementTruth << endl;
+
+	if (incrementTruth == 7)
+	{
+		testCon = true;
+		// figure out a relationship to avoid hardcode 
+	}
+
+	return testCon;
+
+}
