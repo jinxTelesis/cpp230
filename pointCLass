@@ -1,0 +1,60 @@
+#pragma once
+#include <iostream>
+#include <string>
+#include <iomanip>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+class Squares {
+private:
+	int length;
+	int *sq;
+public:
+
+	Squares(int len)
+	{
+		length = len;
+		sq = new int[length]; // dynamically allocated
+		for (int k = 0; k < length; k++)
+		{
+			sq[k] = (k + 1)*(k + 1);
+		}
+		//Tracce
+		cout << "Construct an object of size " << length << endl;
+	}
+
+	void print()
+	{
+		for (int k = 0; k < length; k++)
+			cout << sq[k] << " ";
+		cout << endl;
+	}
+	// destructor
+	~Squares()
+	{
+		delete[] sq; // removes dynamic allocation
+		// Trace
+		cout << "Destory object of size " << length << endl;
+	}
+
+};
+
+void outputSquares(Squares *sqPtr)
+{
+	cout << "The list of squares is: ";
+	sqPtr->print();
+
+}
+
+int main()
+{
+	Squares *sqPtr = new Squares(3);
+	outputSquares(sqPtr);
+
+	delete sqPtr;
+
+	system("pause");
+	return 0;
+}
