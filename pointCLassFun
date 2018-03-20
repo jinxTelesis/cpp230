@@ -1,0 +1,79 @@
+#pragma once
+#include <iostream>
+#include <string>
+#include <iomanip>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+class Person
+{
+private:
+	string name;
+	int age;
+
+public:
+	Person(string name1, int age1)
+	{
+		name = name1;
+		age = age;
+
+	}
+
+	int getAge() { return age; }
+	string getName() { return name; }
+
+
+};
+
+// Rectangle structure
+struct Rectangle
+{
+	int widht, height;
+};
+
+void magnify(Rectangle *pRect, int mFactor);
+int lengthOfName(Person *p);
+void output(Rectangle *pRect);
+
+int main()
+{
+	Rectangle rect;
+	rect.widht = 4;
+	rect.height = 2;
+	cout << "Initial size of rectangle is ";
+	output(&rect);
+	magnify(&rect, 3);
+	cout << "Size of Rectangle after magnification is ";
+	output(&rect);
+
+	Person *pPerson = new Person("Susan Wu", 32);
+	cout << "The name " << pPerson->getName()
+		<< " has length " << lengthOfName(pPerson) << endl;
+
+	delete pPerson;
+	pPerson = nullptr;
+
+	system("pause");
+	return 0;
+}
+
+void output(Rectangle *pRect)
+{
+
+	cout << "width: " << pRect->widht << " height: "
+		<< pRect->height << endl;
+}
+
+int lengthOfName(Person *p)
+{
+	string name = p->getName();
+	return name.length();
+}
+
+void magnify(Rectangle *pRect, int factor)
+{
+	pRect->widht = pRect->widht * factor;
+	pRect->height = pRect->height * factor;
+}
