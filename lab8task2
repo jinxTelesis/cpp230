@@ -1,0 +1,84 @@
+#include<iostream>
+#include<string>
+#include<cctype>
+using	namespace	std;
+//	Function	prototype
+void	selectionSort(string[], int);
+string	upperCaseIt(const	string);
+void	displayNames(const	string[], int);
+int	main() {
+	const	int	SIZE = 20;
+	string testStr = "blah";
+
+	testStr = upperCaseIt(testStr);
+	//	Set	up	the	array	of	strings,	in	this	case	names
+	cout << testStr << endl;
+
+
+	string	name[SIZE] =
+	{ "Collins,	Bill","Smith,Bart",	"Michalski,	Joe","Griffin, Jim",
+		"Sanchez,Manny","Rubin,	Sarah","Taylor, Tyrone", "Johnson,	Jill",
+		"Allison, Jeff","Moreno,Juan","Wolfe,Bill",	"Whitman,Jean",
+		"Moretti,	Bella",	"Wu,	Hong","Patel,Renee","Harrison,	Rose",
+		"Smith,	Cathy",			"Conroy,	Pat",		"Kelly,	Sean",				"Holland,	Beth" };
+	
+	selectionSort(name, SIZE);
+	//	Call	a	function	to	display	the	(now	sorted)	strings
+
+	
+
+	cout << "The	names	in	sorted	order	are:	\n\n";
+
+
+	displayNames(name, SIZE);
+
+
+
+	system("pause");
+	return	0;
+}
+void	selectionSort(string name[], int	numStrings) {
+	int	startScan, minIndex;
+	string	minValue;
+
+	for (startScan = 0; startScan < (numStrings - 1); startScan++)
+	{
+		minIndex = startScan;
+		minValue = name[startScan];
+		for (int index = startScan + 1; index < numStrings; index++)
+		{
+			if (name[index] < minValue)
+			{
+				minValue = name[index];
+				minIndex = index;
+			}
+		}
+		name[minIndex] = name[startScan];
+		name[startScan] = minValue;
+	}
+
+
+	//	ToDo	1:	Sort	the	strings
+}
+string	upperCaseIt(const	string	stringIn) {
+	string	s = stringIn; // are string conversions really character by character				 
+	string s2;
+	char tempch;
+
+	for (int i = 0; i < s.length(); i++)
+	{
+		tempch = s[i];
+		s[i] = toupper(tempch);
+	}
+
+	cout << s << endl;
+
+	return	s;
+}
+void	displayNames(const	string	name[], int	numNames) {
+	
+	for (int index = 0; index < numNames; index++)
+	{
+		cout << " " << name[index] << " " << endl;
+	}
+}
