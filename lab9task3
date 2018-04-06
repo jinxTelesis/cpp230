@@ -1,0 +1,110 @@
+#include <iostream>
+#include <string>
+#include <stdexcept>
+
+using namespace std;
+
+void bubSort(int[], int size);
+double* averArr(int[], int size);
+
+int main() 
+{
+	const int ARRAY_SIZE = 6;
+	int* ptr;
+	ptr = new int [ARRAY_SIZE];
+
+	double* returnPtr = 0;
+
+	cout << "enter 6 test scores " << endl;
+	
+	rewind:
+
+	try {
+
+		for (int index = 0; index < ARRAY_SIZE; index++)
+		{
+			cin >> *(ptr + index);
+			if (*(ptr + index) < 0)
+			{
+				throw invalid_argument(" no negative test scores plz"); // caught before displayed
+				break;
+			}
+		}
+
+	}
+	catch (invalid_argument& exception)
+	{
+		for (int index = 0; index < ARRAY_SIZE; index++)
+		{
+			int temp1 = 0;
+			*(ptr + index) = temp1;
+		}
+		cout << " no negative numbers plz " << endl;
+		cout << " please enter all 6 tests again " << endl;
+		goto rewind;
+	}
+	
+	cout << "These are the test scores as entered " << endl;
+	for (int index = 0; index < ARRAY_SIZE; index++)
+	{
+		cout << " " << *(ptr+index);
+	}
+	cout << endl;
+	
+	bubSort(ptr, ARRAY_SIZE);
+
+	cout << "These are the test scores sorted in ascending order " << endl;
+	for (int index = 0; index < ARRAY_SIZE; index++)
+	{
+		cout << " " << *(ptr + index);
+	}
+	cout << endl;
+
+	returnPtr = averArr(ptr, ARRAY_SIZE);
+	cout << "this is the average " << *returnPtr << endl;
+
+	system("pause");
+return 0;
+
+}
+
+void bubSort(int array[], int size)
+{
+	int temp;
+	bool swap;
+
+	int* ptr = array;
+
+	do {
+		swap = false;
+		for (int i = 0; i < (size - 1); i++)
+		{
+			if ( *(ptr+i) >  *(ptr+i+1))
+			{
+				temp = *(ptr+i);
+				*(ptr + i) = *(ptr + i + 1);
+				*(ptr + i + 1) = temp;
+				swap = true;
+			}
+		}
+	
+	} while (swap);
+}
+
+double* averArr(int array[], int size)
+{
+	int* ptr = array;
+	double sum = 0;
+	double* sumPtr = &sum;
+
+
+	for (int index = 0; index < (size); index++)
+	{
+		*sumPtr += *(ptr + index);
+	}
+
+	*sumPtr /= size;
+
+	return sumPtr;
+}
+
