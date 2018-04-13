@@ -1,0 +1,106 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <stdexcept> 
+#include <iomanip>
+
+using namespace std;
+
+double* averArr(double array[], int size);
+double* sumIt(double array[], int size);
+
+int main() {
+
+	const int BUF_SIZE = 1000; // i used some of my previous code, prob should just used a get with a string not a stream waste of space
+	char strssbuffer[BUFSIZ];
+	string fileLocation = "C:\\Users\\dremo\\OneDrive\\Desktop\\inputFile.txt";
+	ifstream inputfile(fileLocation); // input file object 
+	stringstream ss(); // copied some of my previous code where i solved the file read 3 ways
+	int lineCount = 0; // increments for dynamic allocation when is read again
+	int incrementCount = -1; // a increment for reading file location
+	double *doublePtrAve = nullptr; // stores heap returns from averArr function
+
+	double *doublePtrSum = nullptr; // stores heap returns from sumIt function
+
+	string tempFile;
+
+
+	// read file once with while to get file size
+
+	while (!inputfile.eof()) 
+	{
+		inputfile.getline(strssbuffer, BUFSIZ); // buffers each value in by delimter if files needed to be extracted by value
+		//cout << strssbuffer << endl; // displays that the file is being read
+		lineCount++; // increments for every value in the buffer
+	}
+
+	//cout << "this is line count " << lineCount << endl;
+
+	double* Dptr =  new double[lineCount]; // size dynamically determined with first interation over the file
+
+	inputfile.close(); 
+	inputfile.clear(); 
+	inputfile.open(fileLocation); 
+
+
+	while (!inputfile.eof()) // need a new object on old file or to read that delimiter
+	{
+		//cout << "file opened properly" << endl;
+		getline(inputfile, tempFile); // reads file as a string
+		++incrementCount;
+		*(Dptr + incrementCount) = stod(tempFile); // converts, don't believe it is needed >> does automatic conversions but eh
+	}
+/*
+	for (int index = 0; index < lineCount; index++)
+	{
+		cout << "values " << *(Dptr + index) << endl;
+	}
+*/
+	doublePtrAve = averArr(Dptr, lineCount); // the function will alocate a heap pointer and return
+	doublePtrSum = sumIt(Dptr, lineCount);
+
+	cout << "->->-> " << fixed << setprecision(2) << *doublePtrAve << " is the average of the " <<lineCount << " values " << endl;
+	cout << "->->-> " << fixed << setprecision(2) << *doublePtrSum << " is the sum of the " << lineCount << " values " << endl;
+	
+	delete[] Dptr; // clean up
+	Dptr = nullptr;
+
+	delete doublePtrAve;
+	doublePtrAve = nullptr;
+
+	delete doublePtrSum;
+	doublePtrAve = nullptr;
+
+	system("pause");
+	return 0;
+}
+
+double* sumIt(double array[], int size) // as many pointers as i could fit
+{
+	double* ptr = array;
+	double* sumPtr2 = new double;
+	*sumPtr2 = 0.0;
+
+	for (int index = 0; index < size; index++)
+	{
+		*sumPtr2 += *(ptr + index);
+	}
+
+	return sumPtr2;
+}
+
+double* averArr(double array[], int size) // change to doubles
+{
+	double* ptr = array;
+	double* sumPtr = new double;
+	*sumPtr = 0.0;
+
+	for (int index = 0; index < (size); index++)
+	{
+		*sumPtr += *(ptr + index);
+	}
+
+	*sumPtr /= size;
+
+	return sumPtr;
+}
