@@ -1,0 +1,16 @@
+#include <iostream>
+using namespace std;
+//Solution to problem 1 - assignment1
+int main() {
+    
+    int fib1=1,fib2 =2,newfib=0,sum=0;
+    // initialize the needed variables
+    while(fib1<2000000){
+        if(fib1%2!=0)
+        sum+=fib1;
+        newfib=fib1+fib2;
+        fib1=fib2;
+        fib2=newfib;
+    }
+    cout << sum; // Print out the sum of the numbers
+}
