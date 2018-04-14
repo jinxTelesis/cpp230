@@ -1,0 +1,104 @@
+#include <iostream>
+using namespace std;
+
+// Function prototypes
+int getScores(int[],int, int&);
+int countPerfect(int[],int numElements);
+void displayArrayElements(int[], int numElements);
+int countScoreInRange(int array[], int mn, int mx, int numElements);
+int main()
+{
+    const int SIZE = 20;
+    int array[SIZE],
+    numScores=0,numGradesToEnter=0, sum=0;
+    
+    // Explain the program to the user
+    cout << "This program will allow you to enter up to 50 scores \n"
+    << "and will then report how many perfect scores were entered. \n\n";
+    
+    cout<<"Enter the max numbers of grades to enter: ";cin>> numGradesToEnter;
+    // Call a function to input the scores into array.
+    numScores = getScores(array, numGradesToEnter, sum);
+    
+    // Report the results
+    cout << "\nThe " << numScores << " scores you entered include "
+    << countPerfect(array,numScores) << " perfect scores. \n";
+    
+    cout<<"The average is : "<<sum/numScores<<endl;
+    
+    cout<<"The number of grades less than 59 are "<<countScoreInRange(array,0,59,numScores)<<endl;
+    
+    cout<<"The current stored scores are: "<<endl;
+    displayArrayElements(array,numScores);
+    
+    return 0;
+}
+/*******************************************************
+ *                     getScores                       *
+ * Accepts scores input by the user, stores them in an *
+ * array, and counts them.                             *
+ *******************************************************/
+
+int getScores (int array[], int mxNm, int &sm)
+{
+    int num,
+    pos = 0;
+    if(mxNm>50)
+        mxNm=50;
+    
+    do
+    {   cout << "Enter a score 0 - 100 (or -1 to quit): ";
+        cin  >> num;
+        
+        if (num >= 0 && num <= 100)  // If num is valid,
+        {   array[pos] = num;         // store it and go
+            sm+=num;
+            pos++;                   // to the next array position.
+        }
+        else if (num > 100)          // If num is invalid, display an error message.
+        {   cout << "\nInvalid score. Scores many not be greater than 100. \n\n";
+        }
+        // else the end sentinel was entered, so do nothing.
+        
+    } while (num >= 0 && pos < mxNm);  // Loop again as long as the end sentinel
+    // has not yet been entered and the number
+    // of array locations has not been exceeded.
+    
+    return pos;   // The current value of pos equals the number of scores.
+}
+
+/*******************************************************
+ *                  displayArrayElements               *
+ * Prints array elements on the cout                   *
+ *******************************************************/
+void displayArrayElements(int array[],int numElements){
+    for(int i=0; i<numElements; i++)
+        cout<<"Score number "<<i<<"is : "<<array[i]<<endl;
+}
+
+/*******************************************************
+ *                  countPerfect               *
+ * count the ones equal to 100                   *
+ *******************************************************/
+int countPerfect(int array[],int numElements){
+    int numPerfect = 0;
+    for (int i = 0; i < numElements; i++){
+        if (array[i] == 100)
+            numPerfect++;
+    }
+    return numPerfect;
+}
+
+/*******************************************************
+ *                  count less than 59               *
+ *******************************************************/
+
+int countScoreInRange(int array[], int mn, int mx,int numElements){
+    int num = 0;
+    for (int i = 0; i < numElements; i++)
+    {
+        if (array[i] >=mn && array[i]<=mx)
+            num++;
+    }
+    return num;
+}
