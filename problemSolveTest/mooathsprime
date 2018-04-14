@@ -1,0 +1,8 @@
+#include <iostream>
+int main(){
+    long long num = 1008514753, large=0;
+    for( int i=2; num!=1; ++i)
+    while( num%i==0) // checking factors
+    num/=(large=i);
+    std::cout<<"The largest prime number of is: "<<large;
+}
