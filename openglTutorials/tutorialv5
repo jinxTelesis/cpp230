@@ -1,0 +1,79 @@
+// graphics pipeline transforms 3d into 2d and second part transforms 2d into pixels
+// GPUS runs a ton of small parallel programs called shaders
+// some shaders are configurable by the developer which allows us to write our own shaders
+// shaders are written in the OpenGL shading language GLSL
+// *** need to hit what kind of rendering you are doing. hints are called primitives 
+
+// primvites GL-POINTS, GL_TRIANGLES and GL_LINE_STRIP
+// vertex shader -> geometry shader -> 
+// geometry shader -> rasterization stage 
+// a fragment in OpenGl is all the data required for OpenGl to render a single pixel
+// fragment shader is to calculate the final color of a pixel also where all advanced affects occur.
+// last blending stage 
+
+// NDC coordinates Normalized Device Coordinates 
+// VBO vertex buffer objects (VBO)
+// example unsigned int VBO;
+// glGenBuffers(1, &VBO);
+// glBindBuffer(GL_ARRAY_BUFFER, VBO);
+// glBUfferData is a function specifically targeted to copy user-defined data into the currently bound buffer
+// glBUfferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW)
+//               buffer            size in bytes , the data , draw mode
+
+/*
+#version 330 core
+layout (location = 0) in vec3 aPos;
+
+void main()
+{
+	gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
+}
+
+GLSL looks similar to C
+*/
+
+// compiling a shader
+// unsigned int vertexShader;
+// vertexShader = glCreateShader(GL_VERTEX_SHADER);
+// the type of shader we want is the argument for glCreateShader
+
+// next we attach shader source code to the shader object and compile the shader
+// glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+// glCompileShader(vertexShader);
+
+// checking for compile errors after call to glCompileSHader
+// int success;
+// char infoLog[512];
+// glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success):
+
+/*
+if(!success)
+{
+	glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+	std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n << infoLog << std::endl;
+}
+
+//
+// Fragment Shader fragment shader is all about calculating the color output of your pixels
+//
+
+/*
+#version 330 core
+out vec4 FragColor;
+
+void main()
+{
+	FragColor = vec4(1.0f,0.5f,0.2f,1.0f);
+}
+*/
+
+// compiling the fragment shader
+/*
+unsigned int fragmentShader;
+fragmentShader = glCreateShader(GL_FRAGMENT_SHADER):
+glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+glComipleShader(fragmentShader);
+
+*/
+
+// Shader program is the final linked version of multiple shaders combined.
