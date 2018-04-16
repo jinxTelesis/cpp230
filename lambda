@@ -1,0 +1,36 @@
+#include <iostream>
+#include <algorithm>
+#include <array>
+#include <algorithm>
+
+
+using namespace std; // searching and sorting
+
+
+
+int main() {
+
+	int x = 4;
+
+	cout << "with parameter: Factorial of " << x << " = " << [](int x) // <= parameter
+	{
+		int r = 1;
+		for (int i = x; i > 1; i--) r = r * i;
+		return r;
+
+	}(x) << endl;
+
+	int b = 4;
+
+	cout << "With capture : Factorial of " << x << " = " << [x]() // <= capture
+	{
+		int r = 1;
+		for (int i = x; i > 1; i--) r = r * i;
+		return r;
+	}() << endl;
+
+
+
+	system("pause");
+	return 0;
+}
