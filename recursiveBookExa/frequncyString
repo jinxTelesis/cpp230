@@ -1,0 +1,32 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int frequency(char ch, string inputString, int pos);
+
+int main() {
+
+	string inputString = "abcddddef";
+
+	cout << "The letter d appears "
+		<< frequency('d', inputString, 0) << " times.\n";
+
+
+
+	return 0;
+}
+
+int frequency(char ch, string inputString, int pos)
+{
+	if (pos == inputString.length()) // base case
+	{
+		return 0;
+	}
+	if (inputString[pos] == ch)
+	{
+		return 1 + frequency(ch, inputString, pos + 1);
+	}
+	else
+		return frequency(ch, inputString, pos + 1);
+}
