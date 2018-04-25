@@ -1,0 +1,226 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <array>
+#include <memory>
+#include <ctime>
+#include <stdexcept>
+
+using namespace std;
+
+
+int sum1(int num) // task 1 step 1
+{
+	num = num - num % 5;
+	int result;
+	if (num <= 0)
+		result = 0;
+	else
+		result = num + sum1(num - 5);
+	return result;
+}
+
+int sum2(int num) // task 1 step 2
+{
+	num = num - num % 5;
+	if (num <= 0)
+		return 0;
+	else
+		return num + sum2(num - 5);
+}
+
+int sum3(int num) // task 1 step 3
+{
+	return (num == 0) ? num : (num - num % 5) + sum2(num - 5);
+}
+
+const int ARR_SIZE = 12;
+void bubSort(int array[], int size);
+void printArr(const int x[], int size);
+int binarySearch(const int array[], int first, int last, int value);
+int ptrbSearch(const int array[], int first, int last, int value, int* ptr);
+void seedRandom(int array[], int size);
+
+int main() {
+	
+	int start = 0;
+	int vFound = 0;
+	auto fValue = 0;
+	int *ptr = NULL; // for recursive algorithm
+
+	int *randomArray = nullptr;
+	randomArray = new int[20]; // task 3 part 3
+	seedRandom(randomArray, 20);
+	int userValue = 0;
+
+	//cout << sum1(9);
+	cout << sum2(17) << endl;
+	cout << sum3(5) << endl;
+	
+	
+	int array1[12] = { 3,5,7,8,11,19,10,91,13,94,102,11 };
+	bubSort(array1, ARR_SIZE);
+	printArr(array1, ARR_SIZE);
+	//fValue = array1[8];
+	fValue = 11; // changes the value 
+	vFound = binarySearch(array1, 0, ARR_SIZE, fValue);
+	cout << vFound << endl;
+
+	if (vFound == -1) // task 3 step 1
+	{
+		cout << " value not found " << endl;
+	}
+	else
+	{
+		cout << "the found value is at position:" << vFound << endl;
+	}
+	cout << "\n" << endl;
+
+	vFound = ptrbSearch(array1, 0, ARR_SIZE, fValue, ptr);
+	if (vFound == -1)
+	{
+		cout << " value not found " << endl;
+	}
+	else
+	{
+		cout << "The found value is at psotion : " << vFound << endl;
+	}
+
+	// task 3 part 3
+	cout << "enter a random number between 1-50" << endl;
+	rewind:
+	cin >> userValue;
+
+	try {
+		if (userValue <= 1)
+			throw invalid_argument(" no negative test scores plz"); // caught before displayed
+	}
+	catch(invalid_argument& exception){
+		cout << "Entered number under 1 " << endl;
+		goto rewind;
+	};
+
+	try {
+		if (userValue > 50)
+			throw invalid_argument(" no negative test scores plz"); // caught before displayed
+	}
+	catch (invalid_argument& exception) {
+		cout << "Entered number over 50 " << endl;
+		goto rewind;
+	}
+
+	vFound = ptrbSearch(randomArray, 0,20,userValue,ptr);
+	if (vFound == -1)
+	{
+		cout << " value not found " << endl;
+	}
+	else
+	{
+		cout << "The found value is at psotion : " << vFound << endl;
+	}
+	
+
+
+	system("pause");
+	return 0;
+};
+
+void bubSort(int array[], int size)
+{
+	int temp;
+	bool swap;
+
+	int* ptr = array;
+
+	do {
+		swap = false;
+		for (int i = 0; i < (size - 1); i++)
+		{
+			if (*(ptr + i) >  *(ptr + i + 1))
+			{
+				temp = *(ptr + i);
+				*(ptr + i) = *(ptr + i + 1);
+				*(ptr + i + 1) = temp;
+				swap = true;
+			}
+		}
+
+	} while (swap);
+}
+
+void printArr(const int x[], int size)
+{
+	for (int index=0; index < size; index++)
+	{
+		cout << " " << x[index] << " ";
+	}
+	cout << endl;
+}
+
+int binarySearch(const int array[], int first, int last, int value)
+{
+	int middle;
+
+	if (first > last)
+	{
+		return -1;
+	}
+
+	middle = (first + last) / 2;
+	if (array[middle] == value)
+	{
+		return middle;
+	}
+	if (array[middle] < value)
+	{
+		return binarySearch(array, middle + 1, last, value);
+	}
+	else
+		return binarySearch(array, first, middle - 1, value);
+}
+
+int ptrbSearch(const int array[], int first, int last, int value, int *ptr)// task 3 step 2 
+{
+	const int *pArr = array;
+	int middle;
+
+	if (first > last)
+	{
+		return -1;
+	}
+	middle = ((first + last) / 2);
+	ptr = &middle;
+	if (*(pArr+ (*ptr)) == value)
+	{
+		return (*ptr);
+	}
+	if (*(pArr+ (*ptr)) < value)
+	{
+		return binarySearch(pArr, (*ptr) + 1, last, value);
+	}
+	else
+	{
+		return binarySearch(pArr, first, (*ptr) - 1, value);
+	}
+}
+
+void seedRandom(int array[], int size) // task 3 part 3.
+{
+	srand(time(0));
+
+	for (int i = 0; i < size; i++)
+	{
+		array[i] = rand() % 20 + 1;
+	}
+}
+/*
+int bSearch(const int a[], int lo, int hi, int X){
+int m = (lo + hi) /2;
+if(lo > hi) return -1; // base
+if(a[m] == X) return m; // base
+if(a[m] > X)
+return bSearch(a,lo,m-1,X);
+else
+return bSearch(a,m+1,hi,X);
+}
+*/
