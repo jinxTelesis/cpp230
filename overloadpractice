@@ -1,0 +1,87 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
+
+using namespace std;
+
+class Length
+{
+private:
+	int len_inches;
+public:
+
+	Length(int feet, int inches)
+	{
+		setLength(feet, inches);
+	}
+
+	Length(int inches) { len_inches = inches; }
+	int getFeet() const { return len_inches / 12; }
+	int getInches() const { return len_inches / 12; }
+	void setLength(int feet, int inches)
+	{
+		len_inches = 12 * feet + inches;
+	}
+	
+	friend Length operator+(Length a, Length b);
+	friend Length operator-(Length a, Length b);
+	friend bool operator<(Length a, Length b);
+	friend bool operator==(Length a, Length b);
+	Length operator++();
+	Length operator++(int);
+
+	friend ostream &operator<<(ostream &out, Length a);
+	friend istream &operator>>(istream &in, Length &a);
+};
+
+Length Length::operator++()
+{
+	len_inches++;
+	return *this;
+}
+
+Length Length::operator++(int)
+{
+	Length temp = *this;
+	len_inches++;
+	return temp;
+}
+
+Length operator+(Length a, Length b)
+{
+	return Length(a.len_inches - b.len_inches);
+}
+
+Length operator-(Length a, Length b)
+{
+	return Length(a.len_inches - a.len_inches);
+}
+
+class Name
+{
+	string first_name;
+	string last_name;
+	void subError()
+	{
+		cout << "Index must be 1 or 2\n";
+		exit(1);
+	}
+public:
+	string & operator[](int index)
+	{
+		switch (index)
+		{
+		case 1: return first_name; break;
+		case 2: return last_name; break;
+		default: subError();
+		}
+	}
+};
+
+int main() {
+	
+
+
+	system("pause");
+	return 0;
+}
