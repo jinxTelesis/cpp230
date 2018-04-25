@@ -1,0 +1,37 @@
+int gcd(int a, int b) // ct's gcd function
+{
+
+	return (a == b) ? a : (a > b)? gcd(a - b, b) : gcd(a, b - a);
+}
+
+
+int sum1(int num) // task 1 step 1
+{
+	num = num - num % 5;
+	int result;
+	if (num <= 0)
+		result = 0;
+	else
+		result = num + sum1(num - 5);
+	return result;
+}
+
+int sum2(int num) // task 1 step 2
+{
+	num = num - num % 5;
+	if (num <= 0)
+		return 0;
+	else
+		return num + sum2(num - 5);
+}
+
+int sum3(int num) // task 1 step 3
+{
+	return (num == 0) ? num : (num - num % 5) + sum2(num - 5);
+}
+
+// find the myster function you solved in class 
+
+int mystery(int n) {
+        return (n < 10)?n:n%10+mystery(n/10);
+}
