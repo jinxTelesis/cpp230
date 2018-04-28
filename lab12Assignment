@@ -1,0 +1,70 @@
+#pragma once
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <array>
+#include <stdexcept>
+#include <string.h>
+
+using namespace std;
+
+bool paliDetector(string &word, int pos, int start, bool tf);
+void upperCase(string &word);
+
+int main () {
+
+
+	string notPalindrome = "yargbdoow";
+	string palindrome = "Tacocat";
+	string pali2 = "Civic";
+	string pali3 = "Step on no pets";
+	bool tf = true;
+	int start = 0;
+	upperCase(palindrome);
+	upperCase(notPalindrome);
+	upperCase(pali2);
+	upperCase(pali3);
+	//tf = paliDetector(notPalindrome, notPalindrome.size(), start, tf);
+	//tf = paliDetector(palindrome, palindrome.size(), start, tf);
+	//tf = paliDetector(pali2, pali2.size(), start, tf);
+	tf = paliDetector(pali3, pali3.size(), start, tf); // tested with 4 values
+
+
+	if (tf == true)
+	{
+		cout << "is a palindrome " << endl;
+	}
+	else
+	{
+		cout << "is not a palindrome " << endl;
+	}
+
+	system("pause");
+	return 0;
+} 
+// aware algorithm will compare each spot twice aka crossing over
+bool paliDetector(string &word, int pos, int start, bool tf) // return an extra character on string for true false
+{	
+	if (pos >= 1)
+	{
+		if (word[start]!= word[pos -1]) // back is gonna be 7,6,5,4,3,2,1
+		{
+			return false;
+		}
+		paliDetector(word, (pos - 1) - pos % pos, start +1,tf); // fancy substraction, help remember modulus properties
+	}
+	return true; // could add a character to end as a lexographical conversion to store position number and have no int call
+} // aka pack the positon and true false to the end of the string and pull it off on return
+
+void upperCase(string &word)
+{
+
+	for (int i = 0; i < word.size(); i++)
+	{
+		char temp = word[i]; // stores char
+		word[i] = toupper(temp);
+	}
+
+	cout << "here is the word " << word << endl;
+}
