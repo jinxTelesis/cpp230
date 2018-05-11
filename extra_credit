@@ -1,0 +1,146 @@
+//Rational Arithmetic I
+#include <iostream>
+#include <cstdlib>
+#include <algorithm>
+#include <cmath> // needed to be imported 
+
+using namespace std;
+class Rational
+{
+	// Declaration of overloaded stream insertion operator
+	friend ostream & operator << (ostream &, Rational r);
+private:
+	int numerator, denominator;
+	bool overload;
+public:
+	// Constructor builds a rational number n/d
+	Rational(int n, int d) :numerator(n), denominator(d) // return types will need two ints for each rational object used automaically calls reduce
+	{
+		reduce();
+	}
+
+	friend Rational operator+(Rational a, Rational b); // protos
+	friend Rational operator-(Rational a, Rational b);
+	friend Rational operator*(Rational a, Rational b);
+	friend Rational operator/(Rational a, Rational b);
+	friend Rational operator%(Rational a, Rational b); // modulus only works on first case from zero didn't have time to finish
+private:
+	// This member function transforms a rational number into
+	// reduced form where the numerator and denominator have 1
+	// as greatest common factor
+	Rational(int n) : numerator(n) // for case zero returns for modulo
+	{
+		numerator = n;
+		denominator = n;
+	}
+	Rational(int n, int d, bool a) : numerator(n), denominator(d), overload(a) // priavte constructor for modulos
+	{
+		reduceModulo(); // didn't end up finishing
+	}
+	void reduceModulo();
+	void reduce();
+};
+
+Rational operator*(Rational a, Rational b)
+{
+	return Rational(a.numerator* b.numerator, a.denominator * b.denominator);
+}
+
+Rational operator/(Rational a, Rational b)
+{
+	return Rational(a.numerator * b.denominator, a.denominator * b.numerator);
+}
+
+Rational operator+(Rational a, Rational b) // parenthesis for clarity not order of op
+{
+	return Rational((a.numerator * b.denominator) + (a.denominator * b.numerator), a.denominator * b.denominator);
+}
+
+Rational operator-(Rational a, Rational b) // parenthesis for clarity not order of op
+{
+	return Rational((a.numerator * b.denominator) - (a.denominator * b.numerator), a.denominator * b.denominator);
+}
+
+/********************************************************************
+have to reduce before these tests ******************************************
+******************************************************************************/
+
+Rational operator%(Rational a, Rational b)
+{
+	
+
+	a.reduce(); b.reduce();
+	if ((a.numerator * b.denominator, a.denominator * b.numerator) == 1) // */* part
+		return Rational(0); // private constructor for case zero returns
+	if ((a.numerator / a.denominator) > (b.numerator / b.denominator)) // works on first case
+	{
+		return Rational(((a.numerator * b.denominator) - (a.denominator * b.numerator)), a.denominator * b.denominator); // works on first case need to subtract out each factor of itself
+	}
+	else
+	{
+		return Rational(((a.denominator * b.numerator) - (a.numerator * b.denominator)), a.denominator * b.denominator); // works on first case need to subtract out each factor of itself
+	} // build object that just factors the first not second object 
+
+} 
+//**********************0*************************************
+// This member function transforms a rational number into *
+// reduced form where the numerator and denominator have 1 *
+// as greatest common factor. *
+//************************************************************
+void Rational::reduce() // need to overload this for modulus
+{
+	bool negative = (numerator < 0) != (denominator < 0);
+	numerator = abs(numerator);
+	denominator = abs(denominator);
+	int factor = 2;
+	while (factor <= min(numerator, denominator))
+	{
+		if (numerator % factor == 0 && denominator % factor == 0)
+		{
+			numerator = numerator / factor;
+			denominator = denominator / factor;
+			continue;
+		}
+		factor++;
+	}
+	if (negative)
+		numerator = -numerator;
+}
+void Rational::reduceModulo()
+{
+	cout << "not implmented yet" << endl;
+}
+
+
+//************************************************
+// Overloaded stream insertion operator *
+//************************************************
+ostream & operator << (ostream &out, Rational r)
+{
+	if (r.denominator == 0) // added for zero cases
+	{
+		out << r.numerator;
+		return out;
+	}
+	else
+	{
+		out << r.numerator << "/" << r.denominator;
+		return out;
+	}
+	
+}
+int main() // tested *,-,/-+ 4 times each before attempting modulo
+{
+	Rational obj1(5, 2); 
+	Rational obj2(3, 2);
+	cout << obj1 % obj2 << endl;
+
+	//cout << obj1 + obj2 << endl;
+	//Rational obj3(5, 4);
+	//Rational obj4(4, 4);
+	//cout << obj1 % obj2 << endl;
+	//cout << Rational(6, -12) << endl;
+	//cout << Rational(5, 4) - Rational(4, 4) << endl;
+	system("pause");
+	return 0;
+}
