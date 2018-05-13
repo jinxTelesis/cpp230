@@ -1,0 +1,78 @@
+// default constructor MyCLass()
+// copy constructor MyCLass(const MyCLass &)
+// copy assignment operator MyClass& operator=(const Myclass &)
+// a move constructor MyClass(MyClass &&)
+// a destructor ~MyCLass()
+
+#include <vector>
+#include <algorithm>
+#include <iostream>
+using namespace std;
+
+class IsEven
+{
+public:
+	bool operator()(int x)
+	{
+		return x % 2 == 0;
+	}
+};
+
+class LessThan
+{
+public:
+	bool operator()(int x, int y)
+	{
+		return x < y;
+	}
+};
+
+class IsDivisibileBy
+{
+	int divisor;
+public:
+
+	IsDivisibileBy(int d) { divisor = d; }
+
+	bool operator()(int x)
+	{
+		return x % divisor == 0;
+	}
+
+};
+
+
+
+int main()
+{
+	int arr[]{ 12, 25, 36, 8 , 11 ,15, 89, 32, 71 };
+	vector<int> vec{ 12, 25, 36, 8, 11, 15, 89, 32, 71 };
+	int d = 13;
+
+	auto rem_start = remove_if(begin(vec), end(vec), IsDivisibileBy(d));
+	vec.erase(rem_start, end(vec));
+
+
+	for (int e : arr) { cout << e << " "; }
+
+	sort(begin(arr), end(arr), LessThan()); 
+
+	for (int e : arr) { cout << e << " "; }
+
+
+	auto start_removed = remove_if(begin(vec), end(vec), IsEven());
+	for (int e : vec) { cout << e << " "; }
+
+	vec.erase(start_removed, end(vec)); // actually erases
+
+	for (int e : vec) { cout << e << " "; }
+
+	cout << endl;
+
+	system("pause");
+	return 0;
+}
+
+
+
+
