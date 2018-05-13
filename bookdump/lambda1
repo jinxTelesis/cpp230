@@ -1,0 +1,25 @@
+#include <algorithm>
+#include <functional>
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+	double d_values[]{ 12.7,45.9,6.9 };
+
+	sort(begin(d_values), end(d_values), [](auto a, auto b) {return a > b; }
+	);
+
+	for (auto x : d_values)
+	{
+		cout << x << " ";
+	}
+
+	system("pause");
+	return 0;
+}
+
+
+
