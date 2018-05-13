@@ -1,0 +1,67 @@
+#include <algorithm>
+#include <functional>
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Length {
+private:
+	int len_inches;
+public:
+	Length(int feet, int inches)
+	{
+		setLength(feet, inches); // constructor calls another function
+
+	}
+	Length(int inches) { len_inches = inches; }
+	int getFeet() const { return len_inches / 12; }
+	int getInches() const { return len_inches % 12; }
+	void setLength(int feet, int inches)
+	{
+		len_inches = 12 * feet + inches;
+	}
+
+	// Type conversion operators
+	operator double() const;
+	operator int() const { return len_inches; }
+
+	//Overloaded stream output operator
+	friend ostream &operator<<(ostream &out, Length a);
+
+};
+
+Length::operator double() const
+{
+	return len_inches / 12 + (len_inches % 12) / 12.0;
+}
+
+ ostream &operator<<(ostream& out, Length a)
+{
+	out << a.getFeet() << " feet, " << a.getInches() << " inches";
+	return out; // need to return the ostream object reference
+}
+
+
+int main()
+{
+	Length distance(0);
+	double feet;
+	int inches;
+	distance.setLength(4, 6);
+	cout << "The Length object is " << distance << "." << endl;
+
+	feet = distance;
+	inches = distance;
+	cout << "The Length object measures " << feet << " feet." << endl;
+
+
+
+
+
+	system("pause");
+	return 0;
+}
+
+
+
