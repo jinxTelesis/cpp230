@@ -1,0 +1,59 @@
+#include <algorithm>
+#include <functional>
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class IntCLass
+{
+private:
+	int value;
+public:
+	IntCLass(int intValue)
+	{
+		value = intValue;
+	}
+	int getValue() const { return value; }
+};
+
+void printValue(IntCLass a);
+IntCLass f(int);
+
+int main()
+{
+
+	// Initialize with an int
+	IntCLass intObject = 23;
+	cout << "The value is " << intObject.getValue() << endl;
+
+	// Assign an int
+	intObject = 24;
+	cout << "The value is " << intObject.getValue() << endl;
+
+	// pass an int to a function expecting IntClass
+	cout << "The value is ";
+	printValue(25);
+	cout << endl;
+
+	intObject = f(26);
+	cout << "The value is";
+	printValue(intObject);
+
+
+
+
+	system("pause");
+	return 0;
+}
+
+IntCLass f(int intValue)
+{
+	return intValue;
+}
+
+void printValue(IntCLass x)
+{
+	cout << x.getValue();
+}
+
