@@ -1,0 +1,48 @@
+#include <algorithm>
+#include <functional>
+#include <iostream>
+#include <string>
+#include <memory>
+#include <iomanip>
+
+using namespace std;
+
+template <class T>
+T square(T number)
+{
+	return number * number;
+}
+
+
+int main()
+{
+	cout << setprecision(5);
+
+	cout << "Enter an integer: ";
+	int iValue;
+	cin >> iValue;
+
+	// The compiler creates in square(int) at the first
+	// occurrence of a call to square with an int argument
+
+	cout << "The square is " << square(iValue);
+
+	// Get a double and computer its square
+	cout << "\nENter a double: ";
+	double dValue;
+	cin >> dValue;
+
+	// The compiler creates double square(double) at the first 
+	// occurrence of a call to square with a double argument
+	cout << "The square is " << square(dValue) << endl;
+
+	
+	system("pause");
+	return 0;
+}
+
+
+
+
+
+
